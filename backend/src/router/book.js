@@ -5,7 +5,7 @@ const {authMiddleware,admin} = require("../middleware/auth")
 
 BookRouter.get("/", async(req,res)=>{
 
-    const result = await pool.request().query(`
+    const result = await pool().request().query(`
         SELECT b.Id,b.Title,b.ISBN,b.Description,
         c.Name as Category
         FROM Books b
@@ -19,7 +19,7 @@ BookRouter.post("/",authMiddleware,admin, async(req,res)=>{
 
     const {title,isbn,description} = req.body
 
-    await pool.request()
+    await pool().request()
     .input("title",sql.NVarChar,title)
     .input("isbn",sql.NVarChar,isbn)
     .input("desc",sql.NVarChar,description)
@@ -35,7 +35,7 @@ BookRouter.put("/:id",authMiddleware,admin, async(req,res)=>{
     const {title,description} = req.body
     const id = req.params.id
 
-    await pool.request()
+    await pool().request()
     .input("id",sql.Int,id)
     .input("title",sql.NVarChar,title)
     .input("desc",sql.NVarChar,description)
@@ -53,7 +53,7 @@ BookRouter.delete("/:id",authMiddleware,admin, async(req,res)=>{
 
     const id = req.params.id
 
-    await pool.request()
+    await pool().request()
     .input("id",sql.Int,id)
     .query("DELETE FROM Books WHERE Id=@id")
 
@@ -64,7 +64,7 @@ BookRouter.post("/borrow",authMiddleware, async(req,res)=>{
 
     const {bookId} = req.body
 
-    await pool.request()
+    await pool().request()
     .input("userId",sql.Int,req.user.userId)
     .input("bookId",sql.Int,bookId)
     .input("type",sql.NVarChar,"borrow")
@@ -77,7 +77,7 @@ BookRouter.post("/borrow",authMiddleware, async(req,res)=>{
 });
 BookRouter.get("/my-books",authMiddleware, async(req,res)=>{
 
-    const result = await pool.request()
+    const result = await pool().request()
     .input("userId",sql.Int,req.user.userId)
     .query(`
         SELECT b.Title,a.AccessType
