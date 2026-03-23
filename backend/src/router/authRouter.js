@@ -1,38 +1,51 @@
 const express = require("express")
-const AuthRouter = express.Router()
-const { Register,Login } = require("../services/authService")
 
-AuthRouter.post("/register", async (req, res) => {
+const { authMiddleware } = require("../middleware/auth")
+const { registerUser, loginUser, getUserById } = require("../services/authService")
+
+const authRouter = express.Router()
+
+authRouter.post("/register", async (req, res) => {
     try {
-        const { UserName, Email, Password } = req.body;
-        let result = await Register(UserName, Email, Password);
-        res.status(200).json({
-            result: result.recordset,
-            mess: "register success "
+        const { userName, email, password } = req.body
+        const user = await registerUser(userName, email, password)
+
+        res.status(201).json({
+            message: "Register success",
+            user
         })
     } catch (error) {
-        res.status(500).json("Loi he thong");
-        console.log("Error When Register: ", error)
+        res.status(error.statusCode || 500).json({
+            message: error.message || "System error"
+        })
     }
-
 })
-AuthRouter.post("/login", async (req, res) => {
-    try {
-        const { Email, Password } = req.body;
-        let result = await Login(Email, Password);
 
-        if (!result) throw new Error("Result is undefine");
+authRouter.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body
+        const result = await loginUser(email, password)
 
         res.status(200).json({
-            Token: result,
-            mess: "login success "
+            message: "Login success",
+            ...result
         })
     } catch (error) {
-        res.status(500).json("Loi he thong");
-        console.log("Error When Login: ", error)
+        res.status(error.statusCode || 500).json({
+            message: error.message || "System error"
+        })
     }
-
 })
 
+authRouter.get("/me", authMiddleware, async (req, res) => {
+    try {
+        const user = await getUserById(req.user.userId)
+        res.status(200).json({ user })
+    } catch (error) {
+        res.status(error.statusCode || 500).json({
+            message: error.message || "System error"
+        })
+    }
+})
 
-module.exports = AuthRouter
+module.exports = authRouter

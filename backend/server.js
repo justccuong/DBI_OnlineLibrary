@@ -1,36 +1,51 @@
+require("dotenv").config()
+
+const cors = require("cors")
 const express = require("express")
+
+const { connectDB, getDataMode } = require("./src/configs/db")
+const authRouter = require("./src/router/authRouter")
+const bookRouter = require("./src/router/book")
+
 const app = express()
-const { sql, connectDB } = require("./src/configs/db")
-const AuthRouter = require("./src/router/authRouter")
-const PORT = 3000;
-require('dotenv').config();
-app.use(express.json());
+const PORT = Number(process.env.PORT || 3000)
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173"
 
-app.get("/user",async(req,res)=>{
-    try {
-        const result = await sql.query(`select * from Users`)
-        res.status(200).json({
-            result : result.recordset,
-            message:'tets'
-        })
-    } catch (error) {
-        res.status(500).json("LOI O DAU DO");
-        console.log("error when get all user :",error)
-    }
-});
+app.use(
+    cors({
+        origin: FRONTEND_URL,
+        credentials: true
+    })
+)
+app.use(express.json())
 
-app.use("/books",require("./src/router/book"))
+app.get("/api/health", (req, res) => {
+    res.status(200).json({
+        status: "ok",
+        message: "OnlineLibrary API is running",
+        mode: getDataMode(),
+    })
+})
 
-app.use("/auth",AuthRouter);
+app.use("/api/auth", authRouter)
+app.use("/api/books", bookRouter)
 
+app.use((req, res) => {
+    res.status(404).json({
+        message: "Route not found"
+    })
+})
 
-    (async () => {
-        try {
-            await connectDB()
-            app.listen(PORT, () => {
-                console.log("server is running")
-            })
-        } catch (error) {
-            console.log("error when connect db: ", error)
-        }
-    })()
+app.use((error, req, res, next) => {
+    console.error("Unhandled error:", error)
+    res.status(error.statusCode || 500).json({
+        message: error.message || "Internal server error"
+    })
+})
+
+;(async () => {
+    await connectDB()
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT} in ${getDataMode()} mode`)
+    })
+})()
