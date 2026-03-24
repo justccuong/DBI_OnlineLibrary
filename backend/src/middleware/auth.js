@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken")
+const { isAdminRole } = require("../utils/roles")
 
 const authMiddleware = (req, res, next) => {
     try {
@@ -19,7 +20,7 @@ const authMiddleware = (req, res, next) => {
 }
 
 const admin = (req, res, next) => {
-    if (String(req.user?.role || "").toLowerCase() !== "admin") {
+    if (!isAdminRole(req.user?.role)) {
         return res.status(403).json({ message: "Admin only" })
     }
 

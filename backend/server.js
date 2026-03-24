@@ -6,6 +6,7 @@ const express = require("express")
 const { connectDB, getDataMode } = require("./src/configs/db")
 const authRouter = require("./src/router/authRouter")
 const bookRouter = require("./src/router/book")
+const libraryRouter = require("./src/router/library")
 
 const app = express()
 const PORT = Number(process.env.PORT || 3000)
@@ -29,6 +30,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRouter)
 app.use("/api/books", bookRouter)
+app.use("/api/library", libraryRouter)
 
 app.use((req, res) => {
     res.status(404).json({

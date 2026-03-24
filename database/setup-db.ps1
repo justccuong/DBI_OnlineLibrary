@@ -11,10 +11,10 @@ $sqlcmd = (Get-Command sqlcmd -ErrorAction Stop).Source
 
 Write-Host "Using sqlcmd from: $sqlcmd"
 Write-Host "Creating schema on server: $Server"
-& $sqlcmd -S $Server -E -i $schemaPath
+& $sqlcmd -S $Server -E -f 65001 -i $schemaPath
 
 Write-Host "Seeding demo data and roles"
-& $sqlcmd -S $Server -E -i $seedPath
+& $sqlcmd -S $Server -E -f 65001 -i $seedPath
 
 Write-Host "Database setup completed."
 Write-Host "Database: OnlineLibrary"

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "check": "node --check server.js && node --check src/configs/db.js && node --check src/middleware/auth.js && node --check src/router/authRouter.js && node --check src/router/book.js && node --check src/services/authService.js"
+    "check": "node --check server.js && node --check src/configs/db.js && node --check src/middleware/auth.js && node --check src/router/authRouter.js && node --check src/router/book.js && node --check src/router/library.js && node --check src/services/authService.js && node --check src/utils/roles.js"
   },
   "keywords": [],
   "author": "",

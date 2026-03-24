@@ -98,6 +98,10 @@ function BookDetailPage() {
           <img
             alt={book.title}
             className="h-full min-h-[28rem] w-full object-cover"
+            onError={(event) => {
+              event.currentTarget.onerror = null
+              event.currentTarget.src = "/library_view.png"
+            }}
             src={book.preview_url}
           />
         </div>

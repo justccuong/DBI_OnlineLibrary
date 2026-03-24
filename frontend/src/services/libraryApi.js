@@ -1,6 +1,7 @@
 import { createMockState } from "../data/mockLibraryData"
 
-const REMOTE_LIBRARY_API = import.meta.env.VITE_ENABLE_LIBRARY_API === "true"
+const TOKEN_KEY = "online-library-token"
+const REMOTE_LIBRARY_API = import.meta.env.VITE_ENABLE_LIBRARY_API !== "false"
 const API_ROOT = import.meta.env.VITE_LIBRARY_API_BASE_URL || "/api/library"
 const state = createMockState()
 
@@ -9,9 +10,12 @@ const wait = (time = 280) => new Promise((resolve) => setTimeout(resolve, time))
 const buildUrl = (path) => `${API_ROOT}${path}`
 
 async function fetchJson(path, options = {}) {
+  const token = localStorage.getItem(TOKEN_KEY)
+
   const response = await fetch(buildUrl(path), {
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(options.headers || {}),
     },
     ...options,
@@ -271,11 +275,15 @@ export const libraryApi = {
 
   async saveBook(payload) {
     return withFallback(
-      () =>
-        fetchJson("/books", {
-          method: payload.book_id ? "PUT" : "POST",
+      () => {
+        const path = payload.book_id ? `/books/${payload.book_id}` : "/books"
+        const method = payload.book_id ? "PUT" : "POST"
+
+        return fetchJson(path, {
+          method,
           body: JSON.stringify(payload),
-        }),
+        })
+      },
       () => {
         const normalizedBook = {
           title: payload.title,

@@ -12,6 +12,10 @@ function BookCard({ book }) {
           <img
             alt={book.title}
             className="h-full w-full object-cover transition duration-300 hover:scale-105"
+            onError={(event) => {
+              event.currentTarget.onerror = null
+              event.currentTarget.src = "/library_view.png"
+            }}
             src={book.preview_url}
           />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 to-transparent p-4 text-white">

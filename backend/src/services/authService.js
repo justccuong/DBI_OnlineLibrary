@@ -5,14 +5,14 @@ const jwt = require("jsonwebtoken")
 
 const { sql, pool, hasDbConnection } = require("../configs/db")
 const mockLibrary = require("../data/mockLibrary")
-
-const normalizeRole = (role) => String(role || "member").toLowerCase()
+const { normalizeRole } = require("../utils/roles")
 
 const sanitizeUser = (user) => ({
     id: user.user_id ?? user.Id,
     userName: user.user_name ?? user.UserName,
     email: user.email ?? user.Email,
     role: normalizeRole(user.role_name ?? user.Role),
+    roleLabel: user.role_name ?? user.RoleLabel ?? user.Role ?? normalizeRole(user.role_name ?? user.Role),
 })
 
 const buildUserCode = () => `USR-${randomUUID().replace(/-/g, "").slice(0, 16).toUpperCase()}`
@@ -54,9 +54,23 @@ const registerUser = async (userName, email, password) => {
     }
 
     const roleResult = await pool().request().query(`
-        SELECT TOP 1 role_id
+        SELECT TOP 1 role_id, role_name
         FROM [Role]
-        WHERE LOWER(role_name) = 'member'
+        WHERE LOWER(role_name) IN (
+            'member',
+            N'thành viên',
+            N'thành viên thường',
+            N'thành viên vip',
+            N'khách vãng lai'
+        )
+        ORDER BY CASE
+            WHEN LOWER(role_name) = 'member' THEN 0
+            WHEN LOWER(role_name) = N'thành viên thường' THEN 1
+            WHEN LOWER(role_name) = N'thành viên vip' THEN 2
+            WHEN LOWER(role_name) = N'thành viên' THEN 3
+            WHEN LOWER(role_name) = N'khách vãng lai' THEN 4
+            ELSE 100
+        END
     `)
 
     const memberRole = roleResult.recordset[0]
@@ -82,7 +96,7 @@ const registerUser = async (userName, email, password) => {
 
     return sanitizeUser({
         ...result.recordset[0],
-        role_name: "member",
+        role_name: memberRole.role_name,
     })
 }
 

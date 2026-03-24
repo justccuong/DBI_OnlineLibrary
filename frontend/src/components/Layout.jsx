@@ -65,7 +65,7 @@ function Layout() {
               <>
                 <div className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm">
                   <span className="font-semibold text-slate-900">{user.userName}</span>
-                  <span className="ml-2 text-slate-500">({user.role})</span>
+                  <span className="ml-2 text-slate-500">({user.roleLabel || user.role})</span>
                 </div>
                 <button className="button-secondary" onClick={logout} type="button">
                   Sign out
@@ -144,7 +144,7 @@ function Layout() {
               <p>Frontend showcase for Books, Authors, Categories, Roles, and Access Logs.</p>
             </div>
           </div>
-          <p>Built with React Router, TailwindCSS, and schema-based mock API stubs.</p>
+          <p>Built with React Router, TailwindCSS, and SQL-backed library APIs.</p>
         </div>
       </footer>
     </div>
