@@ -1,0 +1,261 @@
+const isoNow = new Date().toISOString()
+
+export const mockRoles = [
+  { role_id: 1, role_name: "admin", max_download_per_day: 999 },
+  { role_id: 2, role_name: "member", max_download_per_day: 5 },
+  { role_id: 3, role_name: "lecturer", max_download_per_day: 12 },
+]
+
+export const mockAuthors = [
+  {
+    author_id: 1,
+    author_name: "Nguyen Ha Anh",
+    bio: "Writes approachable database design guides for university projects.",
+  },
+  {
+    author_id: 2,
+    author_name: "Tran Minh Quan",
+    bio: "Focuses on modern React dashboards and application architecture.",
+  },
+  {
+    author_id: 3,
+    author_name: "Le Bao Chau",
+    bio: "Explores digital reading experiences and interface design.",
+  },
+  {
+    author_id: 4,
+    author_name: "Pham Gia Kiet",
+    bio: "Specializes in SQL Server reporting and data visualization.",
+  },
+]
+
+export const mockCategories = [
+  { category_id: 1, category_name: "Database" },
+  { category_id: 2, category_name: "Technology" },
+  { category_id: 3, category_name: "Design" },
+  { category_id: 4, category_name: "Business" },
+  { category_id: 5, category_name: "Education" },
+]
+
+export const mockBooks = [
+  {
+    book_id: 1,
+    title: "SQL Server for Campus Systems",
+    Publisher_name: "Campus Press",
+    Published_year: 2025,
+    total_page: 312,
+    file_format: "PDF",
+    average_score: 4.6,
+    isbn: "978100000001",
+    total_rate: 12,
+    downloadable: 1,
+    total_download: 104,
+    total_view: 362,
+    description: "A practical guide to schema design, joins, reports, and CRUD patterns for student systems.",
+    file_size: "18 MB",
+    file_url: "https://example.com/files/sql-server-campus-systems.pdf",
+    preview_url: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    book_id: 2,
+    title: "React Interfaces for Library Teams",
+    Publisher_name: "Digital Shelf Studio",
+    Published_year: 2026,
+    total_page: 248,
+    file_format: "PDF",
+    average_score: 4.8,
+    isbn: "978100000002",
+    total_rate: 20,
+    downloadable: 1,
+    total_download: 156,
+    total_view: 410,
+    description: "Build responsive library dashboards, search experiences, and admin panels with React.",
+    file_size: "12 MB",
+    file_url: "https://example.com/files/react-interfaces-library-teams.pdf",
+    preview_url: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    book_id: 3,
+    title: "Designing Digital Reading Rooms",
+    Publisher_name: "North Studio",
+    Published_year: 2024,
+    total_page: 206,
+    file_format: "EPUB",
+    average_score: 4.3,
+    isbn: "978100000003",
+    total_rate: 9,
+    downloadable: 0,
+    total_download: 0,
+    total_view: 188,
+    description: "An introduction to online reading experiences, interaction design, and accessible interfaces.",
+    file_size: "9 MB",
+    file_url: "",
+    preview_url: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    book_id: 4,
+    title: "Applied Data Modeling",
+    Publisher_name: "TechMind House",
+    Published_year: 2023,
+    total_page: 368,
+    file_format: "PDF",
+    average_score: 4.7,
+    isbn: "978100000004",
+    total_rate: 16,
+    downloadable: 1,
+    total_download: 143,
+    total_view: 399,
+    description: "Covers relational modeling, normalization, and real-world entity relationships for web systems.",
+    file_size: "20 MB",
+    file_url: "https://example.com/files/applied-data-modeling.pdf",
+    preview_url: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    book_id: 5,
+    title: "Leadership Through Reading Communities",
+    Publisher_name: "Open Learning Lab",
+    Published_year: 2022,
+    total_page: 190,
+    file_format: "PDF",
+    average_score: 4.1,
+    isbn: "978100000005",
+    total_rate: 6,
+    downloadable: 1,
+    total_download: 48,
+    total_view: 177,
+    description: "A softer, community-centered look at how reading programs grow engagement across campuses.",
+    file_size: "8 MB",
+    file_url: "https://example.com/files/leadership-through-reading-communities.pdf",
+    preview_url: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=900&q=80",
+  },
+]
+
+export const mockUsers = [
+  {
+    user_id: 1,
+    user_code: "ADMIN001",
+    user_name: "admin",
+    fullname: "Library Administrator",
+    email: "admin@demo.local",
+    phone_number: "0900000001",
+    role_id: 1,
+  },
+  {
+    user_id: 2,
+    user_code: "MEM001",
+    user_name: "student",
+    fullname: "Student Demo",
+    email: "student@demo.local",
+    phone_number: "0900000002",
+    role_id: 2,
+  },
+]
+
+export const mockBookAuthors = [
+  { book_id: 1, author_id: 1 },
+  { book_id: 1, author_id: 4 },
+  { book_id: 2, author_id: 2 },
+  { book_id: 3, author_id: 3 },
+  { book_id: 4, author_id: 1 },
+  { book_id: 4, author_id: 4 },
+  { book_id: 5, author_id: 3 },
+]
+
+export const mockBookCategories = [
+  { book_id: 1, category_id: 1 },
+  { book_id: 1, category_id: 5 },
+  { book_id: 2, category_id: 2 },
+  { book_id: 2, category_id: 3 },
+  { book_id: 3, category_id: 3 },
+  { book_id: 4, category_id: 1 },
+  { book_id: 4, category_id: 2 },
+  { book_id: 5, category_id: 4 },
+  { book_id: 5, category_id: 5 },
+]
+
+export const mockRates = [
+  {
+    user_id: 2,
+    book_id: 1,
+    Rating_score: 5,
+    Review_text: "Very helpful for understanding table relationships and SQL Server basics.",
+    Created_at: "2026-03-18T09:20:00.000Z",
+  },
+  {
+    user_id: 1,
+    book_id: 2,
+    Rating_score: 5,
+    Review_text: "Great layout ideas for building management interfaces with React.",
+    Created_at: "2026-03-19T10:00:00.000Z",
+  },
+  {
+    user_id: 2,
+    book_id: 4,
+    Rating_score: 4,
+    Review_text: "Clear explanations of normalization and practical entity modeling.",
+    Created_at: "2026-03-20T15:45:00.000Z",
+  },
+]
+
+export const mockAccessLogs = [
+  {
+    log_id: 1,
+    access_type: "read",
+    device_ip: "127.0.0.1",
+    Accessed_at: "2026-03-20T08:10:00.000Z",
+    user_id: 2,
+    book_id: 1,
+  },
+  {
+    log_id: 2,
+    access_type: "download",
+    device_ip: "127.0.0.1",
+    Accessed_at: "2026-03-20T08:24:00.000Z",
+    user_id: 2,
+    book_id: 1,
+  },
+  {
+    log_id: 3,
+    access_type: "preview",
+    device_ip: "127.0.0.1",
+    Accessed_at: "2026-03-21T11:30:00.000Z",
+    user_id: 2,
+    book_id: 2,
+  },
+  {
+    log_id: 4,
+    access_type: "download",
+    device_ip: "127.0.0.1",
+    Accessed_at: "2026-03-21T11:42:00.000Z",
+    user_id: 1,
+    book_id: 2,
+  },
+  {
+    log_id: 5,
+    access_type: "read",
+    device_ip: "127.0.0.1",
+    Accessed_at: "2026-03-22T14:00:00.000Z",
+    user_id: 2,
+    book_id: 4,
+  },
+  {
+    log_id: 6,
+    access_type: "preview",
+    device_ip: "127.0.0.1",
+    Accessed_at: isoNow,
+    user_id: 2,
+    book_id: 3,
+  },
+]
+
+export const createMockState = () => ({
+  roles: structuredClone(mockRoles),
+  authors: structuredClone(mockAuthors),
+  categories: structuredClone(mockCategories),
+  books: structuredClone(mockBooks),
+  users: structuredClone(mockUsers),
+  bookAuthors: structuredClone(mockBookAuthors),
+  bookCategories: structuredClone(mockBookCategories),
+  rates: structuredClone(mockRates),
+  accessLogs: structuredClone(mockAccessLogs),
+})
